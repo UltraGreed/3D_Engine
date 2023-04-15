@@ -2,21 +2,31 @@
 // Created by ultragreed on 3/12/23.
 //
 
-#include "VectorSpace.h"
-#include "config.h"
+#include "CoordinateSystem.h"
+#include "MatrixBased.h"
+#include <cmath>
+
 
 #ifndef INC_3D_ENGINE_CAMERA_H
 #define INC_3D_ENGINE_CAMERA_H
 
+template<typename MetricType, typename AngleType, int dimension>
 class Camera {
 public:
-    Camera(VectorSpace::Point3 position, VectorSpace::Vector3 lookDir, BaseAngleType fieldOfViewDegrees, BaseMetricType drawDistance);
+    Camera(CoordinateSystem::Point<MetricType, dimension> position,
+           Math::Vector<MetricType, dimension> lookDir,
+           AngleType fieldOfViewDegrees,
+           MetricType drawDistance) :
+            position(position),
+            lookDirection(lookDirection),
+            fieldOfViewRadians(fieldOfViewDegrees * float(M_PI) / 180),
+            drawDistance(drawDistance) {}
 
 private:
-    VectorSpace::Point3 position;
-    VectorSpace::Vector3 lookDirection;
-    BaseAngleType fieldOfViewRadians;
-    BaseMetricType drawDistance;
+    CoordinateSystem::Point<MetricType, dimension> position;
+    Math::Vector<MetricType, dimension> lookDirection;
+    AngleType fieldOfViewRadians;
+    MetricType drawDistance;
 
     void SendRays(int n);
 };

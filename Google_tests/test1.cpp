@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "VectorSpace.h"
+#include "CoordinateSystem.h"
 
 TEST(VectorOperationsTests, VectorAddition) {
     VectorSpace vectorSpace;
