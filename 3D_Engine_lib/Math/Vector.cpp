@@ -21,39 +21,96 @@ namespace Math {
     }
 
     template<typename T, int n>
-    Vector <T, n> Vector<T, n>::operator+(const Vector <T, n> &other) const {
+    Vector<T, n> Vector<T, n>::operator+(const Vector<T, n> &other) const {
         return Vector<T, n>(this->baseMatrix + other.getBaseMatrix());
     }
 
     template<typename T, int n>
-    Vector <T, n> Vector<T, n>::operator-(const Vector <T, n> &other) const {
+    Vector<T, n> Vector<T, n>::operator-(const Vector<T, n> &other) const {
         return Vector<T, n>(this->baseMatrix - other.getBaseMatrix());
     }
 
     template<typename T, int n>
-    Vector <T, n> Vector<T, n>::operator*(const T scalar) const {
+    Vector<T, n> Vector<T, n>::operator*(const T scalar) const {
         return Vector<T, n>(this->baseMatrix * scalar);
     }
 
     template<typename T, int n>
-    Vector <T, n> Vector<T, n>::operator/(const T scalar) const {
+    Vector<T, n> Vector<T, n>::operator/(const T scalar) const {
         return Vector<T, n>(this->baseMatrix / scalar);
     }
 
 // scalar product
     template<typename T, int n>
-    T Vector<T, n>::operator*(const Vector <T, n> &other) const {
+    T Vector<T, n>::operator*(const Vector<T, n> &other) const {
         return scalarProduct(other);
     }
 
 // vector product
     template<typename T, int n>
-    Vector <T, n> Vector<T, n>::operator&(const Vector <T, n> &other) const {
+    Vector<T, n> Vector<T, n>::operator&(const Vector<T, n> &other) const {
         vectorProduct(other);
     }
 
+
     template<typename T, int n>
-    T Vector<T, n>::scalarProduct(const Vector <T, n> &other) const {
+    Vector<T, n> Vector<T, n>::operator-() const {
+        return Vector<T, n>(-this->baseMatrix);
+    }
+
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator=(const Vector<T, n> &other) {
+        this->baseMatrix = other.getBaseMatrix();
+        return *this;
+    }
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator=(Vector<T, n> &&other) noexcept {
+        this->baseMatrix = std::move(other.getBaseMatrix());
+        return *this;
+    }
+
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator+=(const Vector<T, n> &other) {
+        this->baseMatrix += other.getBaseMatrix();
+        return *this;
+    }
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator-=(const Vector<T, n> &other) {
+        this->baseMatrix -= other.getBaseMatrix();
+        return *this;
+    }
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator*=(const T scalar) {
+        this->baseMatrix *= scalar;
+        return *this;
+    }
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator/=(const T scalar) {
+        this->baseMatrix /= scalar;
+        return *this;
+    }
+
+    template<typename T, int n>
+    Vector<T, n> &Vector<T, n>::operator&=(const Vector<T, n> &other) {
+        *this = *this & other;
+        return *this;
+    }
+
+
+    template<typename T, int n>
+    bool Vector<T, n>::operator==(const Vector<T, n> &other) const {
+        return this->baseMatrix == other.getBaseMatrix();
+    }
+
+
+    template<typename T, int n>
+    T Vector<T, n>::scalarProduct(const Vector<T, n> &other) const {
         T sum = 0;
         for (int i = 0; i < n; i++)
             sum += (*this)[i] * other[i];
@@ -61,21 +118,21 @@ namespace Math {
     }
 
     template<typename T, int n>
-    Vector <T, n> Vector<T, n>::vectorProduct(const Vector <T, n> &other) const {
+    Vector<T, n> Vector<T, n>::vectorProduct(const Vector<T, n> &other) const {
         static_assert(n == 3, "Vector product is only defined for 3D vectors");
 
-        T det1 = Matrix < T,
-        2, 2 > {
+        T det1 = Matrix<T,
+                2, 2>{
                 (*this)[1], (*this)[2],
                 other[1], other[2]
         }.determinant();
-        T det2 = Matrix < T,
-        2, 2 > {
+        T det2 = Matrix<T,
+                2, 2>{
                 (*this)[0], (*this)[2],
                 other[0], other[2]
         }.determinant();
-        T det3 = Matrix < T,
-        2, 2 > {
+        T det3 = Matrix<T,
+                2, 2>{
                 (*this)[0], (*this)[1],
                 other[0], other[1]
         }.determinant();
@@ -107,7 +164,7 @@ namespace Math {
 
 
     template<typename T, int n, int m>
-    T bilinearForm(const Matrix <T, n, m> &matrix, const Vector <T, n> &vector1, const Vector <T, m> &vector2) {
+    T bilinearForm(const Matrix<T, n, m> &matrix, const Vector<T, n> &vector1, const Vector<T, m> &vector2) {
         return vector1.castToMatrix().transpose() * matrix * vector2.castToMatrix();
     }
 }

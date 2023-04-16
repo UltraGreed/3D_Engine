@@ -32,6 +32,7 @@ namespace Math {
 
     template<typename T, int n, int m>
     T Matrix<T, n, m>::operator[](int i, int j) {
+        // TODO: throw exception
         return baseMatrix[i, j];
     }
 
@@ -119,6 +120,11 @@ namespace Math {
 
         *this = *this * other;
         return *this;
+    }
+
+    template<typename T, int n, int m>
+    bool Matrix<T, n, m>::operator==(const Matrix<T, n, m> &other) const {
+        return this->baseMatrix == other.getBaseMatrix();
     }
 
     template<typename T, int n, int m>

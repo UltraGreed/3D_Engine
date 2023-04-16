@@ -16,11 +16,13 @@ namespace CoordinateSystem {
 
         explicit Point(std::array<T, n> pointArray) : baseMatrix(pointArray) {}
 
+        T operator[](int i) const;
+
         Point<T, n> operator+(const Math::Vector<T, n> &other) const;
 
         Point<T, n> operator-(const Math::Vector<T, n> &other) const;
 
-        T operator[](int i) const;
+        bool operator==(const Point<T, n> &other) const;
 
     private:
         Math::BaseMatrix<T, n, 1> baseMatrix;

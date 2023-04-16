@@ -2,7 +2,6 @@
 // Created by ultragreed on 4/13/23.
 //
 
-#include <concepts>
 #include <array>
 
 #ifndef INC_3D_ENGINE_MATRIX_H
@@ -41,7 +40,9 @@ namespace Math {
             static_assert(n == 1);
         }
 
+
         T operator[](int i, int j) const;
+
 
         BaseMatrix<T, n, m> operator+(const BaseMatrix<T, n, m> &other) const;
 
@@ -51,11 +52,14 @@ namespace Math {
 
         T operator/(T scalar) const;
 
+
         BaseMatrix<T, n, m> operator-() const;
+
 
         BaseMatrix<T, n, m> &operator=(const BaseMatrix<T, n, m> &other);
 
         BaseMatrix<T, n, m> &operator=(BaseMatrix<T, n, m> &&other) noexcept;
+
 
         BaseMatrix<T, n, m> &operator+=(const BaseMatrix<T, n, m> &other);
 
@@ -64,6 +68,10 @@ namespace Math {
         BaseMatrix<T, n, m> &operator*=(T scalar);
 
         BaseMatrix<T, n, m> &operator/=(T scalar);
+
+
+        bool operator==(const BaseMatrix<T, n, m> &other) const;
+
 
         std::array<std::array<T, m>, n> matrixArray;
     };
@@ -76,13 +84,16 @@ namespace Math {
 
         explicit Matrix(std::array<std::array<T, m>, n> matrixArray) : baseMatrix(matrixArray) {}
 
+
         static Matrix<T, n, m> identity();
 
         static Matrix<T, n, m> zero();
 
         static Matrix<T, n, m> gram(std::array<Vector<T, m>, n> vectors);
 
+
         T operator[](int i, int j);
+
 
         Matrix<T, n, m> operator+(const Matrix<T, n, m> &other) const;
 
@@ -92,16 +103,20 @@ namespace Math {
 
         Matrix<T, n, m> operator/(T scalar) const;
 
+
         template<int k>
         Matrix<T, n, k> operator*(const Matrix<T, m, k> &other) const;
+
 
         Matrix<T, n, m> operator-() const;
 
         Matrix<T, n, m> operator~() const;
 
+
         Matrix<T, n, m> &operator=(const Matrix<T, n, m> &other);
 
         Matrix<T, n, m> &operator=(Matrix<T, n, m> &&other) noexcept;
+
 
         Matrix<T, n, m> &operator+=(const Matrix<T, n, m> &other);
 
@@ -112,6 +127,10 @@ namespace Math {
         Matrix<T, n, m> &operator/=(T scalar);
 
         Matrix<T, n, m> &operator*=(const Matrix<T, n, m> &other);
+
+
+        bool operator==(const Matrix<T, n, m> &other) const;
+
 
         auto castToVector() const;
 
@@ -145,6 +164,7 @@ namespace Math {
 
         T operator[](int i) const;
 
+
         Vector<T, n> operator+(const Vector<T, n> &other) const;
 
         Vector<T, n> operator-(const Vector<T, n> &other) const;
@@ -153,11 +173,35 @@ namespace Math {
 
         Vector<T, n> operator/(T scalar) const;
 
+
         // scalar product
         T operator*(const Vector<T, n> &other) const;
 
         // vector product
         Vector<T, n> operator&(const Vector<T, n> &other) const;
+
+
+        Vector<T, n> operator-() const;
+
+
+        Vector<T, n> &operator=(const Vector<T, n> &other);
+
+        Vector<T, n> &operator=(Vector<T, n> &&other) noexcept;
+
+
+        Vector<T, n> &operator+=(const Vector<T, n> &other);
+
+        Vector<T, n> &operator-=(const Vector<T, n> &other);
+
+        Vector<T, n> &operator*=(T scalar);
+
+        Vector<T, n> &operator/=(T scalar);
+
+        Vector<T, n> &operator&=(const Vector<T, n> &other);
+
+
+        bool operator==(const Vector<T, n> &other) const;
+
 
         T scalarProduct(const Vector<T, n> &other) const;
 
