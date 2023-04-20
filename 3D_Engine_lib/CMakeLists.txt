@@ -1,15 +1,23 @@
-cmake_minimum_required(VERSION 3.24)
+# Add a library target for the Math classes
+add_library(Math
+        Math/Matrix.tpp
+        Math/BaseMatrix.tpp
+        Math/Vector.tpp
+        )
 
-project(3D_Engine)
+target_include_directories(Math PUBLIC Math)
 
-set(CMAKE_CXX_STANDARD 23)
+# Add a library target for the CoordinateSystem classes
+add_library(CoordinateSystem
+        CoordinateSystem/Point.tpp
+        CoordinateSystem/VectorSpace.tpp
+        CoordinateSystem/CoordinateSystem.tpp
+        )
 
-set(HEADER_FILES Camera.h Math/MatrixBased.h CoordinateSystem/CoordinateSystem.h)
+target_include_directories(CoordinateSystem PUBLIC CoordinateSystem)
 
-set(SOURCE_FILES Camera.cpp Math/Matrix.cpp Math/BaseMatrix.cpp Math/Vector.cpp CoordinateSystem/Point.cpp CoordinateSystem/VectorSpace.cpp CoordinateSystem/CoordinateSystem.cpp)
-
-add_library(3D_Engine_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
-
-target_include_directories(3D_Engine_lib PRIVATE Math CoordinateSystem)
-
-add_executable(3D_Engine main.cpp)
+# Set linker language
+set_target_properties(Math CoordinateSystem
+        PROPERTIES
+        LINKER_LANGUAGE CXX
+        )

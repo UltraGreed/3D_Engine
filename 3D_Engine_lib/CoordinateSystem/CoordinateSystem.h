@@ -1,46 +1,16 @@
 //
 // Created by ultragreed on 4/15/23.
 //
-#include "MatrixBased.h"
+
+#pragma once
+
+#include "Matrix.h"
+#include "Point.h"
+#include "VectorSpace.h"
+
 #include <array>
 
-#ifndef INC_3D_ENGINE_VECTORSPACE_H
-#define INC_3D_ENGINE_VECTORSPACE_H
-
-
 namespace CoordinateSystem {
-    template<typename T, int n>
-    class Point {
-    public:
-        Point() : baseMatrix() {}
-
-        explicit Point(std::array<T, n> pointArray) : baseMatrix(pointArray) {}
-
-        T operator[](int i) const;
-
-        Point<T, n> operator+(const Math::Vector<T, n> &other) const;
-
-        Point<T, n> operator-(const Math::Vector<T, n> &other) const;
-
-        bool operator==(const Point<T, n> &other) const;
-
-    private:
-        Math::BaseMatrix<T, n, 1> baseMatrix;
-    };
-
-    template<typename T, int n>
-    class VectorSpace {
-    public:
-        explicit VectorSpace(std::array<Math::Vector<T, n>, n> basis) : basis(basis) {}
-
-        T scalarProduct(const Math::Vector<T, n> &vector1, const Math::Vector<T, n> &vector2) const;
-
-        Math::Vector<T, n> castPointToVector(const Point<T, n> &point) const;
-
-    private:
-        std::array<Math::Vector<T, n>, n> basis;
-    };
-
     template<typename T, int n>
     class CoordinateSystem {
     public:
@@ -55,4 +25,5 @@ namespace CoordinateSystem {
         Point<T, n> startPoint;
     };
 }
-#endif //INC_3D_ENGINE_VECTORSPACE_H
+
+#include "CoordinateSystem.tpp"

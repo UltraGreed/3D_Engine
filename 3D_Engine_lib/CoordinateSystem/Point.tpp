@@ -2,10 +2,14 @@
 // Created by ultragreed on 4/15/23.
 //
 
-#include "CoordinateSystem.h"
-#include "MatrixBased.h"
+#include "Matrix.h"
 
 namespace CoordinateSystem {
+    template<typename T, int n>
+    T &Point<T, n>::operator[](int i) {
+        return this->baseMatrix[i, 0];
+    }
+
     template<typename T, int n>
     T Point<T, n>::operator[](int i) const {
         return this->baseMatrix[i, 0];
