@@ -25,8 +25,6 @@ namespace Math {
 
         explicit Vector(BaseMatrix<T, n, 1> baseMatrix) : baseMatrix(baseMatrix) {}
 
-        Matrix<T, n, 1> castToMatrix() const;
-
         T &operator[](int i);
 
         T operator[](int i) const;
@@ -88,6 +86,10 @@ namespace Math {
         BaseMatrix<T, n, 1> baseMatrix;
     };
 
+
+
+    template<typename T, int n>
+    Matrix<T, n, 1> castVectorToMatrix(Vector<T, n> vector);
 
     template<typename T, int n>
     T operator*(T scalar, Vector<T, n>);

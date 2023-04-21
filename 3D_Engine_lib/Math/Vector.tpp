@@ -8,12 +8,6 @@
 
 
 namespace Math {
-    // Vector class methods implementation
-    template<typename T, int n>
-    Matrix<T, n, 1> Vector<T, n>::castToMatrix() const {
-        return Matrix<T, n, 1>(this->baseMatrix);
-    }
-
     template<typename T, int n>
     T &Vector<T, n>::operator[](int i) {
         return this->baseMatrix[i, 0];
@@ -63,19 +57,6 @@ namespace Math {
     }
 
 
-//    template<typename T, int n>
-//    Vector<T, n> &Vector<T, n>::operator=(const Vector<T, n> &other) {
-//        this->baseMatrix = other.getBaseMatrix();
-//        return *this;
-//    }
-//
-//    template<typename T, int n>
-//    Vector<T, n> &Vector<T, n>::operator=(Vector<T, n> &&other) noexcept {
-//        this->baseMatrix = std::move(other.getBaseMatrix());
-//        return *this;
-//    }
-
-
     template<typename T, int n>
     Vector<T, n> &Vector<T, n>::operator+=(const Vector<T, n> &other) {
         this->baseMatrix += other.getBaseMatrix();
@@ -114,7 +95,7 @@ namespace Math {
 
 
     template<typename T, int n>
-    Vector<T,n>::operator T() const {
+    Vector<T, n>::operator T() const {
         static_assert(n == 1, "Vector can be casted to scalar only if it has 1 element");
 
         return T(this->baseMatrix);
@@ -163,7 +144,7 @@ namespace Math {
 
     template<typename T, int n>
     double Vector<T, n>::length() const {
-        return norm(2);
+        return std::sqrt(scalarProduct(*this));
     }
 
     template<typename T, int n>
@@ -186,9 +167,13 @@ namespace Math {
         return this->baseMatrix;
     }
 
+    template<typename T, int n>
+    Matrix<T, n, 1> castVectorToMatrix(Vector<T, n> vector) {
+        return Matrix<T, n, 1>(vector.getBaseMatrix());
+    }
 
     template<typename T, int n, int m>
     T bilinearForm(const Matrix<T, n, m> matrix, const Vector<T, n> vector1, const Vector<T, m> vector2) {
-        return T(vector1.castToMatrix().transpose() * matrix * vector2.castToMatrix());
+        return T(castVectorToMatrix(vector1).transpose() * matrix * castVectorToMatrix(vector2));
     }
 }

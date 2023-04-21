@@ -21,8 +21,6 @@ namespace Math {
 
     template<typename T, int n, int m>
     Matrix<T, n, m> Matrix<T, n, m>::zero() {
-        static_assert(n == m, "Zero matrix must be square");
-
         return Matrix<T, n, m>();
     }
 
@@ -80,7 +78,7 @@ namespace Math {
     }
 
     template<typename T, int n, int m>
-    Matrix<T, n, m> Matrix<T, n, m>::TeitBrayan(std::array<T, 3> angles) {
+    Matrix<T, 3, 3> Matrix<T, n, m>::TeitBrayan(std::array<T, 3> angles) {
         static_assert(n == m, "Teit-Brayan matrix must be squared");
         static_assert(n == 3, "Teit-Brayan matrix must be 3x3");
 

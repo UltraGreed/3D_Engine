@@ -75,5 +75,5 @@ TEST(VectorOperationsTests, VectorMatrixTranspose) {
     Math::Vector<int, 3> vector1({1, 2, 3});
     Math::Matrix<int, 1, 3> expected({1, 2, 3});
 
-    EXPECT_TRUE((vector1.castToMatrix().transpose() == expected));
+    EXPECT_TRUE((castVectorToMatrix(vector1).transpose() == expected));
 }

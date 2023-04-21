@@ -11,9 +11,7 @@
 
 namespace Math {
     enum class RotationAxis {
-        X,
-        Y,
-        Z
+        X, Y, Z
     };
 
     template<typename T, int n, int m>
@@ -42,7 +40,7 @@ namespace Math {
 
         static Matrix<T, 3, 3> rotation(T angle, RotationAxis axis);
 
-        static Matrix<T, n, m> TeitBrayan(std::array<T, 3> angles);
+        static Matrix<T, 3, 3> TeitBrayan(std::array<T, 3> angles);
 
         T &operator[](int i, int j);
 
@@ -104,13 +102,13 @@ namespace Math {
         BaseMatrix<T, n, m> baseMatrix;
     };
 
-    template <typename T>
+    template<typename T>
     static T determinant(Matrix<T, 1, 1> minor);
 
-    template <typename T>
+    template<typename T>
     static T determinant(Matrix<T, 2, 2> minor);
 
-    template <typename T, int n, int m>
+    template<typename T, int n, int m>
     static T determinant(Matrix<T, n, m> minor);
 
     template<typename T, int n, int m>
